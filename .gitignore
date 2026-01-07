@@ -1,0 +1,30 @@
+# --- Build Output ---
+# Ignore compiled object files and executables
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# --- Build Directories ---
+# Ignore folders where CMake or IDEs put built files
+build/
+bin/
+dist/
+out/
+cmake-build-debug/
+cmake-build-release/
+
+# --- IDE Settings ---
+# Ignore local user settings for Visual Studio, VS Code, etc.
+.vscode/
+.idea/
+*.user
+*.suo
+.vs/
+
+# --- OS Generated Files ---
+# Mac and Windows system files
+.DS_Store
+Thumbs.db
