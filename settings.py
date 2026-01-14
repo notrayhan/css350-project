@@ -1,0 +1,17 @@
+# Screen settings
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
+CAPTION = "Tetris"
+
+# Colors (R, G, B)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+DARK_GREY = (50, 50, 50)
+GREEN = (0, 128, 0)
+RED = (128, 0, 0)
+
+# UI Settings
+BUTTON_WIDTH = 200
+BUTTON_HEIGHT = 50
+FONT_SIZE_TITLE = 100
+FONT_SIZE_BUTTON = 50
