@@ -1,5 +1,7 @@
 # Pygame Tetris - CSS 350A
 
+Make sure to install Python: https://www.python.org/downloads/
+
 "python3 main.py" in terminal to run game
 
 Run this command to ensure correct pygame version:
