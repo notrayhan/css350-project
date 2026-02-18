@@ -10,7 +10,7 @@ pygame.display.set_caption(CAPTION)
 # Define fonts for game loop
 game_font = pygame.font.SysFont(None, FONT_SIZE_BUTTON)
 
-# Keeps window open until you click X
+# Keeps window open until you click X   
 running = True
 while running:
     main_menu(screen)
