@@ -75,7 +75,8 @@ int main() {
 
     Py_Finalize();
     PyConfig_Clear(&config);
-
-    std::cout << "Python finalized.\n";
+    
+    std::cout << "Python finalized. Press Enter to exit...";
+    std::cin.get(); // waits for Enter
     return 0;
 }
