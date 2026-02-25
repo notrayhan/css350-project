@@ -50,7 +50,7 @@ GameFolder/
 
 ## To-Do
 
-- Integrate game into the `scripts` folder.  
-- Integrate assets into the `scripts` folder.  
-- All dependencies needed for Python are bundled.  
+- Integrate game into the `python` folder.  
+- Integrate assets into the `python` folder.  
+- All dependencies needed for Python are bundled. (need pygame install, py13+architecture problems: considering rep with py11)
 
