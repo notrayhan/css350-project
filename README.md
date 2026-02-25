@@ -34,7 +34,8 @@ GameFolder/
     │   │   └── pygame/
     │   └── ...
     ├── DLLs/
-    └── your_game.py
+    ├── game/app/runnable.py
+    └── assets for above
 ```
 
 ---
