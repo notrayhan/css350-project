@@ -41,15 +41,16 @@ GameFolder/
 
 ## Complete
 
-- All dependencies needed for Python are bundled.  
 - Dynamic filepathing to all bundled Python dependencies (Lib, DLLs, etc.).
+- Bundle all C++ dependencies.  
+- Filepathing to all bundled C++ dependencies.  
+- Create executable.
 
 ---
 
 ## To-Do
 
-- Bundle all C++ dependencies.  
-- Filepathing to all bundled C++ dependencies.  
 - Integrate game into the `scripts` folder.  
 - Integrate assets into the `scripts` folder.  
-- Create executable.
+- All dependencies needed for Python are bundled.  
+
