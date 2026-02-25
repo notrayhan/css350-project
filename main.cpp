@@ -36,7 +36,7 @@ int main() {
     PyConfig_SetString(&config, &config.home, pythonHomeW.c_str());
     PyConfig_SetString(&config, &config.program_name, L"launcher");
 
-    // PyWideStringList_Append(&config.module_search_paths, pythonLibW.c_str());
+    // PyWideStringList_Append(&config.module_search_paths, pythonLibW.c_str()); // manual lib pathing
 
     status = Py_InitializeFromConfig(&config);
     if (PyStatus_Exception(status)) {
