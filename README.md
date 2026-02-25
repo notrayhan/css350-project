@@ -8,9 +8,9 @@ Ultimately, this will be an executable, bundled with the game and all other nece
 
 ## CRT (C Runtime) Toolchain
 
-- **Python:** UTRVC  
-- **C++:** UTRVC  
-> **Note:** Development must be done using UTRVC CRT.
+- **Python:** MSVC 
+- **C++:** MSVC  
+> **Note:** Development must be done using MSVC CRT.
 
 ---
 
