@@ -1,8 +1,6 @@
 #include <Python.h>
 #include <iostream>
 #include <string>
-#include <locale>
-#include <codecvt>
 #include <windows.h>
 
 std::wstring GetExeFolder() {
@@ -14,54 +12,47 @@ std::wstring GetExeFolder() {
 }
 
 int main() {
-    std::cout << "=== Starting embedded Python debug2 ===\n";
+    std::cout << "=== Starting embedded Python ===\n";
 
     std::wstring exeFolder = GetExeFolder();
     std::wstring pythonHomeW = exeFolder + L"\\python";
     std::wstring pythonLibW  = pythonHomeW + L"\\Lib";
 
-    // Convert wide string to UTF-8
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::string pythonHome = converter.to_bytes(pythonHomeW);
-    std::string pythonLib  = converter.to_bytes(pythonLibW);
-
-    std::cout << "Python home (UTF-8): " << pythonHome << "\n";
-    std::cout << "Python Lib (UTF-8): " << pythonLib << "\n";
+    std::wcout << L"Python home: " << pythonHomeW << L"\n";
+    std::wcout << L"Python Lib : " << pythonLibW << L"\n";
 
     PyStatus status;
     PyConfig config;
     PyConfig_InitPythonConfig(&config);
 
-    // Disable automatic path configuration
-    config.module_search_paths_set = 1;
+    // following line turns on manual specification for lib path
+    // see line 39
+    // config.module_search_paths_set = 1;
 
-    // Set Python home and program name
-    config.home = Py_DecodeLocale(pythonHome.c_str(), nullptr);
-    config.program_name = Py_DecodeLocale((pythonHome + "\\python.exe").c_str(), nullptr);
+    // keep this disabled (0), unless necessary
+    config.site_import = 0; // ensures library deletions do not affect run
 
-    // Explicitly tell Python where to search for modules
-    wchar_t* libPath = Py_DecodeLocale(pythonLib.c_str(), nullptr);
-    PyWideStringList_Append(&config.module_search_paths, libPath);
+    // set python home and program name
+    PyConfig_SetString(&config, &config.home, pythonHomeW.c_str());
+    PyConfig_SetString(&config, &config.program_name, L"launcher");
 
-    // (Optional but helpful)
-    config.site_import = 0;  // disable site.py during testing
+    // PyWideStringList_Append(&config.module_search_paths, pythonLibW.c_str());
 
-    // Initialize Python
     status = Py_InitializeFromConfig(&config);
     if (PyStatus_Exception(status)) {
         std::cerr << "Python failed to initialize!\n";
-        Py_ExitStatusException(status);
+        PyConfig_Clear(&config);
         return 1;
     }
 
     std::cout << "Python initialized successfully!\n";
 
-    // Run a test Python command
-    // This is where we can run any python script, including our game
     int result = PyRun_SimpleString("print('Hello from embedded Python!')");
     std::cout << "PyRun_SimpleString result: " << result << "\n";
 
     Py_Finalize();
+    PyConfig_Clear(&config);
+
     std::cout << "Python finalized.\n";
     return 0;
 }
