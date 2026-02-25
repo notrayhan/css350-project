@@ -47,8 +47,31 @@ int main() {
 
     std::cout << "Python initialized successfully!\n";
 
-    int result = PyRun_SimpleString("print('Hello from embedded Python!')");
-    std::cout << "PyRun_SimpleString result: " << result << "\n";
+    // More UTF-16 to UTF-8 conversion nonsense
+    // apparantly forcing UTF-8 conversion from its parent language is highly pythonic
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, pythonHomeW.c_str(), -1, NULL, 0, NULL, NULL);
+    std::string pythonHomeUtf8(size_needed, 0);
+    WideCharToMultiByte(CP_UTF8, 0, pythonHomeW.c_str(), -1, &pythonHomeUtf8[0], size_needed, NULL, NULL);
+    // remove the extra null terminator at the end
+    if (!pythonHomeUtf8.empty() && pythonHomeUtf8.back() == '\0') pythonHomeUtf8.pop_back();
+
+    // Add the python folder to sys.path
+    std::string addPathCmd = "import sys; sys.path.insert(0, r'" + pythonHomeUtf8 + "')";
+    PyRun_SimpleString(addPathCmd.c_str());
+
+    // The game run command
+    // replace "sample_game" with any .py runnable
+    PyObject* pName = PyUnicode_FromString("sample_game"); // filename without .py
+    PyObject* pModule = PyImport_Import(pName);
+    Py_XDECREF(pName);
+
+    if (pModule == nullptr) {
+        PyErr_Print();
+        std::cerr << "Failed to load sample_game.py\n";
+    } else {
+        std::cout << "sample_game.py run successfully!\n";
+        Py_XDECREF(pModule);
+    }
 
     Py_Finalize();
     PyConfig_Clear(&config);

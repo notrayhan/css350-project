@@ -1,0 +1,13 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Force text files to use LF in the repository, CRLF on checkout (Windows)
+*.cpp   text
+*.h     text
+*.py    text
+
+# Binary files should not be modified
+*.exe   binary
+*.dll   binary
+*.lib   binary
+*.pyd   binary
