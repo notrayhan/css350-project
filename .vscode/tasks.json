@@ -6,12 +6,12 @@
             "label": "Build Launcher (MSVC x64)",
             "command": "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/cl.exe",
             "args": [
-                "/EHsc",                                 // Enable C++ exceptions
-                "/I", "C:/Users/user/AppData/Local/Python/pythoncore-3.14-64/include",
-                "main.cpp",
-                "/link",
-                "/LIBPATH:C:/Users/user/AppData/Local/Python/pythoncore-3.14-64/libs",
-                "python314.lib",
+                "/EHsc",                                 // Enable C++ exceptions                     
+            "/I", "C:/Users/user/AppData/Local/Programs/Python/Python312/include",
+            "main.cpp",
+            "/link",
+            "/LIBPATH:C:/Users/user/AppData/Local/Programs/Python/Python312/libs",
+            "python312.lib",
                 "/OUT:${workspaceFolder}/launcher.exe"
             ],
             "options": {

@@ -4,7 +4,9 @@
             "name": "x64-MSVC",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Users/user/AppData/Local/Python/pythoncore-3.14-64/include"
+                "C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.44.35207/include",
+                "C:/Program Files (x86)/Windows Kits/10/Include/10.0.22621.0/ucrt",
+                "C:/Users/user/AppData/Local/Programs/Python/Python312/include"
             ],
             "defines": [
                 "_DEBUG",

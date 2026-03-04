@@ -25,18 +25,13 @@ int main() {
     PyConfig config;
     PyConfig_InitPythonConfig(&config);
 
-    // following line turns on manual specification for lib path
-    // see line 39
-    // config.module_search_paths_set = 1;
 
-    // keep this disabled (0), unless necessary
-    config.site_import = 0; // ensures library deletions do not affect run
+    config.site_import = 1; // ensure site packages are found
 
     // set python home and program name
     PyConfig_SetString(&config, &config.home, pythonHomeW.c_str());
     PyConfig_SetString(&config, &config.program_name, L"launcher");
 
-    // PyWideStringList_Append(&config.module_search_paths, pythonLibW.c_str()); // manual lib pathing
 
     status = Py_InitializeFromConfig(&config);
     if (PyStatus_Exception(status)) {
@@ -45,7 +40,15 @@ int main() {
         return 1;
     }
 
+    // Manual sys.path append
+    PyRun_SimpleString("import sys; sys.path.insert(0, r'path_to_extra_libs')");
+
+    
+
     std::cout << "Python initialized successfully!\n";
+
+    PyRun_SimpleString("import pygame; print('pygame imported successfully')");
+
 
     // More UTF-16 to UTF-8 conversion nonsense
     // apparantly forcing UTF-8 conversion from its parent language is highly pythonic
