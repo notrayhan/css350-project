@@ -18,8 +18,8 @@ int main() {
     std::wstring pythonHomeW = exeFolder + L"\\python";
     std::wstring pythonLibW  = pythonHomeW + L"\\Lib";
 
-    std::wcout << L"Python home: " << pythonHomeW << L"\n";
-    std::wcout << L"Python Lib : " << pythonLibW << L"\n";
+    // std::wcout << L"Python home: " << pythonHomeW << L"\n";
+    // std::wcout << L"Python Lib : " << pythonLibW << L"\n";
 
     PyStatus status;
     PyConfig config;
