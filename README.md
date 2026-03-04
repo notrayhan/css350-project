@@ -2,7 +2,7 @@
 
 ## Brief
 
-Ultimately, this will be an executable, bundled with the game and all other necessary dependencies, that when run will allow the user to run the game without installing Python, C++, or any other dependencies.
+Downloading the entire project folder and running launcher.exe allows the user to run tetris without installing Python, C++, or any other dependencies.
 
 ---
 
@@ -14,6 +14,9 @@ Ultimately, this will be an executable, bundled with the game and all other nece
 
 ---
 
+## Python version
+- **Python 3.12**
+
 ## File Structure
 
 > **The wrapper code uses dynamic file pathing, so the file structure must not change.**
@@ -22,7 +25,7 @@ Ultimately, this will be an executable, bundled with the game and all other nece
 GameFolder/
 │
 ├── launcher.exe
-├── python314.dll
+├── python312.dll
 ├── vcruntime140.dll
 ├── vcruntime140_1.dll
 ├── msvcp140.dll
@@ -34,7 +37,9 @@ GameFolder/
     │   │   └── pygame/
     │   └── ...
     ├── DLLs/
-    ├── game/app/runnable.py
+    ├── python.exe
+    ├── python3.dll
+    ├── game.py <- tetris
     └── assets for above
 ```
 
@@ -46,6 +51,7 @@ GameFolder/
 - Bundle all C++ dependencies.  
 - Filepathing to all bundled C++ dependencies.  
 - Create executable.
+- All dependencies needed for Python are bundled. (pygame installed)
 
 ---
 
@@ -53,5 +59,3 @@ GameFolder/
 
 - Integrate game into the `python` folder.  
 - Integrate assets into the `python` folder.  
-- All dependencies needed for Python are bundled. (need pygame install, py13+architecture problems: considering rep with py11)
-
