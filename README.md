@@ -59,3 +59,4 @@ GameFolder/
 
 - Integrate game into the `python` folder.  
 - Integrate assets into the `python` folder.  
+- MacOS version
