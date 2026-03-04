@@ -15,7 +15,7 @@ Downloading the entire project folder and running launcher.exe allows the user t
 ---
 
 ## Python version
-- **Python 3.12**
+- **Python 3.12** (full installation)
 
 ## File Structure
 
