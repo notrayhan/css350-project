@@ -50,6 +50,7 @@ def main_menu(screen):
     # Load assets
     bg_image = None
     instr_img = None
+    instr_mask = None
 
     try:
         # Load mainscreen.png - Scale to COVER the screen (preserves aspect ratio)
@@ -69,9 +70,10 @@ def main_menu(screen):
         
         instr_temp = pygame.image.load(os.path.join(assets_dir, 'instructions.png'))
         i_w, i_h = instr_temp.get_size()
-        
+        # Scale to 500px width
         instr_w = 500
         instr_img = pygame.transform.smoothscale(instr_temp, (instr_w, int(i_h * (instr_w / i_w)))).convert_alpha()
+        instr_mask = pygame.mask.from_surface(instr_img)
         print("Assets loaded successfully!")
     except (FileNotFoundError, pygame.error) as e:
         print(f"Warning: Could not load assets. Error: {e}")
@@ -97,7 +99,7 @@ def main_menu(screen):
             instr_w = 500
             button_instr = pygame.Rect((SCREEN_WIDTH - instr_w) // 2, 600, instr_w, BUTTON_HEIGHT)
             pygame.draw.rect(screen, (0, 0, 150), button_instr)
-            draw_text('Help', button_font, WHITE, screen, SCREEN_WIDTH // 2 - 50, 600)
+            draw_text('Help', button_font, WHITE, screen, SCREEN_WIDTH // 2, 600)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -109,6 +111,10 @@ def main_menu(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if button_instr.collidepoint((mx, my)):
-                        show_instructions(screen)
+                        if instr_mask:
+                            if instr_mask.get_at((mx - button_instr.x, my - button_instr.y)):
+                                show_instructions(screen)
+                        else:
+                            show_instructions(screen)
 
         pygame.display.update()
