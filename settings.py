@@ -1,6 +1,6 @@
 # Screen settings
 SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 800
+SCREEN_HEIGHT = 800  # Changed to 4:3 ratio (800x600) or use 450 for 16:9
 CAPTION = "Tetris"
 
 # Colors (R, G, B)

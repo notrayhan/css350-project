@@ -49,7 +49,6 @@ def main_menu(screen):
 
     # Load assets
     bg_image = None
-    start_img = None
     instr_img = None
 
     try:
@@ -68,14 +67,11 @@ def main_menu(screen):
         bg_image.blit(temp_bg_scaled, ((SCREEN_WIDTH - new_w) // 2, (SCREEN_HEIGHT - new_h) // 2))
         bg_image = bg_image.convert()
         
-        # Load buttons - Scale to width, preserve aspect ratio
-        start_temp = pygame.image.load(os.path.join(assets_dir, 'start.png'))
-        s_w, s_h = start_temp.get_size()
-        start_img = pygame.transform.smoothscale(start_temp, (BUTTON_WIDTH, int(s_h * (BUTTON_WIDTH / s_w)))).convert_alpha()
-        
         instr_temp = pygame.image.load(os.path.join(assets_dir, 'instructions.png'))
         i_w, i_h = instr_temp.get_size()
-        instr_img = pygame.transform.smoothscale(instr_temp, (BUTTON_WIDTH, int(i_h * (BUTTON_WIDTH / i_w)))).convert_alpha()
+        
+        instr_w = 500
+        instr_img = pygame.transform.smoothscale(instr_temp, (instr_w, int(i_h * (instr_w / i_w)))).convert_alpha()
         print("Assets loaded successfully!")
     except (FileNotFoundError, pygame.error) as e:
         print(f"Warning: Could not load assets. Error: {e}")
@@ -93,34 +89,25 @@ def main_menu(screen):
         else:
             draw_text('Tetris', title_font, WHITE, screen, SCREEN_WIDTH // 2, 200)
 
-        # --- Draw Buttons ---
-        
-        # Start Button (y=350)
-        if start_img:
-            button_start = start_img.get_rect(center=(SCREEN_WIDTH // 2, 350))
-            screen.blit(start_img, button_start)
-        else:
-            button_start = pygame.Rect((SCREEN_WIDTH - BUTTON_WIDTH) // 2, 350, BUTTON_WIDTH, BUTTON_HEIGHT)
-            pygame.draw.rect(screen, GREEN, button_start)
-            draw_text('Play', button_font, WHITE, screen, SCREEN_WIDTH // 2, 375)
 
-        # Instructions Button (y=450)
         if instr_img:
-            button_instr = instr_img.get_rect(center=(SCREEN_WIDTH // 2, 740))
+            button_instr = instr_img.get_rect(center=(SCREEN_WIDTH // 2, 600))
             screen.blit(instr_img, button_instr)
         else:
-            button_instr = pygame.Rect((SCREEN_WIDTH - BUTTON_WIDTH) // 2, 450, BUTTON_WIDTH, BUTTON_HEIGHT)
+            instr_w = 500
+            button_instr = pygame.Rect((SCREEN_WIDTH - instr_w) // 2, 600, instr_w, BUTTON_HEIGHT)
             pygame.draw.rect(screen, (0, 0, 150), button_instr)
-            draw_text('Help', button_font, WHITE, screen, SCREEN_WIDTH // 2, 475)
+            draw_text('Help', button_font, WHITE, screen, SCREEN_WIDTH // 2 - 50, 600)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    return
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    if button_start.collidepoint((mx, my)):
-                        return # Exit menu loop to start game
                     if button_instr.collidepoint((mx, my)):
                         show_instructions(screen)
 
