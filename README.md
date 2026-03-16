@@ -3,8 +3,9 @@
 ## Instructions
 
 1. Download full project folder
-2. Run "launcher"
-3. Enjoy the game!
+2. Unzip if zipped
+3. Run "launcher"
+4. Enjoy the game!
 
 ---
 
