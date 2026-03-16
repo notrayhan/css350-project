@@ -14,7 +14,6 @@ std::string GetExeFolder() {
         std::cerr << "Failed to get executable path (buffer too small?)\n";
         return "";
     }
-    // buffer now contains the path, dirname() extracts the folder
     return std::string(dirname(buffer));
 }
 
@@ -22,27 +21,28 @@ int main() {
     std::cout << "=== Starting embedded Python ===\n";
 
     std::string exeFolder = GetExeFolder();
-    if (exeFolder.empty()) return 1;
+    std::string pythonHomeStr = exeFolder + "/python";  // points to the "python/" folder
 
-    std::string pythonHomeStr = exeFolder + "/python";
-    std::string pythonLibStr  = pythonHomeStr + "/lib/python3.12";
+    // Python folders
+    std::string pythonLib      = pythonHomeStr + "/lib/python3.12";
+    std::string pythonDynLoad  = pythonLib + "/lib-dynload";
+    std::string pythonSite     = pythonLib + "/site-packages";
+    std::string gameFolder     = exeFolder + "/game";    // folder containing sample_game.py
 
-    // Convert to wide strings for Python API
-    std::wstring pythonHome(pythonHomeStr.begin(), pythonHomeStr.end());
-    std::wstring programName = L"launcher";
-
+    // Initialize Python
     PyStatus status;
     PyConfig config;
     PyConfig_InitPythonConfig(&config);
 
     config.site_import = 1;
 
-    // Python requires wchar_t*
-    PyConfig_SetString(&config, &config.home, pythonHome.c_str());
+    std::wstring pythonHomeW(pythonHomeStr.begin(), pythonHomeStr.end());
+    std::wstring programName = L"launcher";
+
+    PyConfig_SetString(&config, &config.home, pythonHomeW.c_str());
     PyConfig_SetString(&config, &config.program_name, programName.c_str());
 
     status = Py_InitializeFromConfig(&config);
-
     if (PyStatus_Exception(status)) {
         std::cerr << "Python failed to initialize!\n";
         PyConfig_Clear(&config);
@@ -52,34 +52,21 @@ int main() {
     std::cout << "Python initialized successfully!\n";
 
     // ================= macOS embedded Python sys.path fix ==================
-
-    // Top-level lib folder
-    std::string pythonStdLib = pythonHomeStr + "/lib";
-
-    // lib-dynload folder (compiled extension modules)
-    std::string pythonDynLoad = pythonStdLib + "/lib-dynload";
-
-    // Add Python standard library to sys.path
-    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonStdLib + "')").c_str());
-
-    // Add compiled modules (if any)
+    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonLib + "')").c_str());
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonDynLoad + "')").c_str());
-
-    // Add your game folder (where sample_game.py and pygame live)
-    std::string gameFolder = exeFolder + "/python";
+    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonSite + "')").c_str());
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + gameFolder + "')").c_str());
-
     // =======================================================================
 
+    // Test import
     PyRun_SimpleString("import pygame; print('pygame imported successfully')");
 
     // Import and run the python game
-    PyObject* pName = PyUnicode_FromString("sample_game");
+    PyObject* pName = PyUnicode_FromString("sample_game");  // no .py extension
     PyObject* pModule = PyImport_Import(pName);
-
     Py_XDECREF(pName);
 
-    if (pModule == nullptr) {
+    if (!pModule) {
         PyErr_Print();
         std::cerr << "Failed to load sample_game.py\n";
     } else {
