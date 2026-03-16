@@ -24,55 +24,57 @@ int main() {
     std::string exeFolder = GetExeFolder();
     if (exeFolder.empty()) return 1;
 
-    // Top-level python folder (contains python3.12 and lib/)
-    std::string pythonHome = exeFolder + "/python";
+    std::string pythonHomeStr = exeFolder + "/python";
+    std::string pythonLibStr  = pythonHomeStr + "/lib/python3.12";
 
-    // Standard library + site-packages (includes pygame)
-    std::string pythonLib  = pythonHome + "/lib";
-
-    // Game scripts folder
-    std::string gameFolder = pythonHome + "/game";
+    // Convert to wide strings for Python API
+    std::wstring pythonHome(pythonHomeStr.begin(), pythonHomeStr.end());
+    std::wstring programName = L"launcher";
 
     PyStatus status;
     PyConfig config;
     PyConfig_InitPythonConfig(&config);
 
-    config.site_import = 1; // ensure site packages are found
+    config.site_import = 1;
 
-    // Set Python home and program name
+    // Python requires wchar_t*
     PyConfig_SetString(&config, &config.home, pythonHome.c_str());
-    PyConfig_SetString(&config, &config.program_name, "launcher");
+    PyConfig_SetString(&config, &config.program_name, programName.c_str());
 
     status = Py_InitializeFromConfig(&config);
+
     if (PyStatus_Exception(status)) {
         std::cerr << "Python failed to initialize!\n";
         PyConfig_Clear(&config);
         return 1;
     }
 
-    // Append game folder to sys.path first
-    std::string addPathCmd = "import sys; sys.path.insert(0, r'" + gameFolder + "')";
-    PyRun_SimpleString(addPathCmd.c_str());
-
-    // Append Python lib folder to sys.path
-    addPathCmd = "import sys; sys.path.insert(0, r'" + pythonLib + "')";
-    PyRun_SimpleString(addPathCmd.c_str());
-
     std::cout << "Python initialized successfully!\n";
 
-    // Test Pygame import
+    // Add python lib to sys.path
+    std::string addPathCmd =
+        "import sys; sys.path.insert(0, r'" + pythonLibStr + "')";
+    PyRun_SimpleString(addPathCmd.c_str());
+
+    // Add game folder
+    std::string gameFolder = exeFolder + "/python";
+    addPathCmd =
+        "import sys; sys.path.insert(0, r'" + gameFolder + "')";
+    PyRun_SimpleString(addPathCmd.c_str());
+
     PyRun_SimpleString("import pygame; print('pygame imported successfully')");
 
-    // Import and run your game
-    PyObject* pName = PyUnicode_FromString("tetris"); // your game script (without .py)
+    // Import and run the python game
+    PyObject* pName = PyUnicode_FromString("sample_game");
     PyObject* pModule = PyImport_Import(pName);
+
     Py_XDECREF(pName);
 
     if (pModule == nullptr) {
         PyErr_Print();
-        std::cerr << "Failed to load tetris.py\n";
+        std::cerr << "Failed to load sample_game.py\n";
     } else {
-        std::cout << "tetris.py run successfully!\n";
+        std::cout << "sample_game.py run successfully!\n";
         Py_XDECREF(pModule);
     }
 
