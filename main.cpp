@@ -51,16 +51,23 @@ int main() {
 
     std::cout << "Python initialized successfully!\n";
 
-    // Add python lib to sys.path
-    std::string addPathCmd =
-        "import sys; sys.path.insert(0, r'" + pythonLibStr + "')";
-    PyRun_SimpleString(addPathCmd.c_str());
+    // ================= macOS embedded Python sys.path fix ==================
 
-    // Add game folder
-    std::string gameFolder = exeFolder + "/python";
-    addPathCmd =
-        "import sys; sys.path.insert(0, r'" + gameFolder + "')";
-    PyRun_SimpleString(addPathCmd.c_str());
+    // Standard library path
+    std::string pythonStdLib = pythonHomeStr + "/lib/python3.12";
+
+    // lib-dynload folder (compiled Python modules)
+    std::string pythonDynLoad = pythonStdLib + "/lib-dynload";
+
+    // Add paths to sys.path
+    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonStdLib + "')").c_str());
+    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonDynLoad + "')").c_str());
+
+    // Add your game folder
+    std::string gameFolder = exeFolder + "/python"; // your game scripts folder
+    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + gameFolder + "')").c_str());
+
+    // =======================================================================
 
     PyRun_SimpleString("import pygame; print('pygame imported successfully')");
 
