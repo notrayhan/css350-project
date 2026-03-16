@@ -27,7 +27,7 @@ int main() {
     std::string pythonLib      = pythonHomeStr + "/lib/python3.12";
     std::string pythonDynLoad  = pythonLib + "/lib-dynload";
     std::string pythonSite     = pythonLib + "/site-packages";
-    std::string gameFolder     = exeFolder + "/game";    // folder containing sample_game.py
+    
 
     // Initialize Python
     PyStatus status;
@@ -55,11 +55,17 @@ int main() {
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonLib + "')").c_str());
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonDynLoad + "')").c_str());
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonSite + "')").c_str());
-    PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + gameFolder + "')").c_str());
+    
     // =======================================================================
 
-    // Test import
-    PyRun_SimpleString("import pygame; print('pygame imported successfully')");
+    std::string gameFolder = exeFolder + "/game";    // folder containing sample_game.py
+    std::cout << "Adding game folder to Python path: " << gameFolder << std::endl;
+
+    std::string pySysPathCmd = "import sys; sys.path.insert(0, r'" + gameFolder + "')";
+    PyRun_SimpleString(pySysPathCmd.c_str());
+
+    // sys.path to debug
+    PyRun_SimpleString("import sys; print('Python sys.path:', sys.path)");
 
     // Import and run the python game
     PyObject* pName = PyUnicode_FromString("main");  // main.py in python/game/ folder
