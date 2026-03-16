@@ -1,10 +1,16 @@
 # Pygame Tetris - CSS 350A
 
-Make sure to install Python: https://www.python.org/downloads/
+## Easy Setup Instructions:
 
-"python3 main.py" in terminal to run game
+- If on windows, navigate to "windows" branch and follow readme instructions
+- If on macOS, navigate to "macOS" branch and follow readme instructions
 
-Run this command to ensure correct pygame version:
+## Manual Setup Instructions:
 
-Windows: "pip install pygame==2.6.1"
-Mac: "pip3 install pygame==2.6.1"
+- Install Python: https://www.python.org/downloads/
+- verify pygame installation:
+  - Windows: "pip install pygame==2.6.1"
+  - Mac: "pip3 install pygame==2.6.1"
+- "python3 main.py" in terminal to run game
+
+
