@@ -53,18 +53,20 @@ int main() {
 
     // ================= macOS embedded Python sys.path fix ==================
 
-    // Standard library path
-    std::string pythonStdLib = pythonHomeStr + "/lib/python3.12";
+    // Top-level lib folder
+    std::string pythonStdLib = pythonHomeStr + "/lib";
 
-    // lib-dynload folder (compiled Python modules)
+    // lib-dynload folder (compiled extension modules)
     std::string pythonDynLoad = pythonStdLib + "/lib-dynload";
 
-    // Add paths to sys.path
+    // Add Python standard library to sys.path
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonStdLib + "')").c_str());
+
+    // Add compiled modules (if any)
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + pythonDynLoad + "')").c_str());
 
-    // Add your game folder
-    std::string gameFolder = exeFolder + "/python"; // your game scripts folder
+    // Add your game folder (where sample_game.py and pygame live)
+    std::string gameFolder = exeFolder + "/python";
     PyRun_SimpleString(("import sys; sys.path.insert(0, r'" + gameFolder + "')").c_str());
 
     // =======================================================================
