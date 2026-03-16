@@ -3,10 +3,10 @@
 ## Easy Setup Instructions:
 
 - If on windows, navigate to "windows" branch and follow readme instructions
- ([windows version link]https://github.com/notrayhan/sparma-CSS-350-A/tree/windows)
+[windows version link](https://github.com/notrayhan/sparma-CSS-350-A/tree/windows)
   
 - If on macOS, navigate to "macOS" branch and follow readme instructions
-  ([macOS version link]https://github.com/notrayhan/sparma-CSS-350-A/tree/macOS)
+  [macOS version link](https://github.com/notrayhan/sparma-CSS-350-A/tree/macOS)
 
 ## Manual Setup Instructions:
 
