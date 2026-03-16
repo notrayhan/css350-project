@@ -18,6 +18,7 @@ int main() {
     std::wstring pythonHomeW = exeFolder + L"\\python";
     std::wstring pythonLibW  = pythonHomeW + L"\\Lib";
 
+    // print file paths for python home and lib
     // std::wcout << L"Python home: " << pythonHomeW << L"\n";
     // std::wcout << L"Python Lib : " << pythonLibW << L"\n";
 
@@ -63,16 +64,16 @@ int main() {
     PyRun_SimpleString(addPathCmd.c_str());
 
     // The game run command
-    // replace "sample_game" with any .py runnable
-    PyObject* pName = PyUnicode_FromString("sample_game"); // filename without .py
+    // replace "main" with any .py runnable entrypoint
+    PyObject* pName = PyUnicode_FromString("main"); // filename without .py
     PyObject* pModule = PyImport_Import(pName);
     Py_XDECREF(pName);
 
     if (pModule == nullptr) {
         PyErr_Print();
-        std::cerr << "Failed to load sample_game.py\n";
+        std::cerr << "Failed to load main.py\n";
     } else {
-        std::cout << "sample_game.py run successfully!\n";
+        std::cout << "main.py run successfully!\n";
         Py_XDECREF(pModule);
     }
 
