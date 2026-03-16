@@ -10,6 +10,7 @@
 ---
 
 ## Version
+- macOS
 - **Python 3.12.7** (full installation)
 - **Pygame 2.6.1**
 
