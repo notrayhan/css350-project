@@ -1,4 +1,4 @@
-Tetris2:
+# Tetris 2
 
 ## Brief
 
