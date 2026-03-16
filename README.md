@@ -18,6 +18,7 @@
 ---
 
 ## Version
+- Windows
 - **Python 3.12** (full installation)
 - **Pygame 2.6.1**
 
