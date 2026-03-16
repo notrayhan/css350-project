@@ -62,7 +62,7 @@ int main() {
     PyRun_SimpleString("import pygame; print('pygame imported successfully')");
 
     // Import and run the python game
-    PyObject* pName = PyUnicode_FromString("sample_game");  // no .py extension
+    PyObject* pName = PyUnicode_FromString("main");  // main.py in python/game/ folder
     PyObject* pModule = PyImport_Import(pName);
     Py_XDECREF(pName);
 
