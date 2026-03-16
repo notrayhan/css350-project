@@ -58,7 +58,7 @@ int main() {
     
     // =======================================================================
 
-    std::string gameFolder = exeFolder + "/game";    // folder containing sample_game.py
+    std::string gameFolder = pythonHomeStr  + "/game";    // folder containing sample_game.py
     std::cout << "Adding game folder to Python path: " << gameFolder << std::endl;
 
     std::string pySysPathCmd = "import sys; sys.path.insert(0, r'" + gameFolder + "')";
