@@ -35,5 +35,5 @@ GameFolder/
 ```
 ## Warnings
 
-- executable launcher is an "unsigned binary" meaning it can trigger "unsafe developer" flags / permission checks
-- launcher may need "chmod permissions", in terminal: chmod +x launcher
+- executable launcher is an "unsigned binary" meaning it can trigger "unsafe developer" flags / quarantines
+- disable quarantine by navigating in terminal to the launcher filepath and entering command: xattr -dr com.apple.quarantine ./launcher
