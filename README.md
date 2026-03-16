@@ -1,6 +1,6 @@
 # Tetris 2
 
-## Brief
+## Instructions
 
 1. Download full project folder
 2. Run "launcher"
@@ -8,8 +8,9 @@
 
 ---
 
-## Python version
-- **Python 3.12** (full installation)
+## Version
+- **Python 3.12.7** (full installation)
+- **Pygame 2.6.1**
 
 ## File Structure
 
